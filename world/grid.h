@@ -34,10 +34,11 @@ class GridCreator
         void setCellMode(std::size_t id, const CellMode mode);
         
         [[nodiscard]] const sf::RectangleShape* getCell(const std::size_t id) const;
-        [[nodiscard]] std::size_t getCellId(const float x, const float y) const;
+        [[nodiscard]] bool getCellId(const float x, const float y, std::size_t& id);
         [[nodiscard]] CellMode getCellMode(const std::size_t id) const;
         [[nodiscard]] std::size_t getCellsQuantity() const {return _cells.size();}
-        [[nodiscard]] std::size_t getCellMinId() const {return 0;};
+        [[nodiscard]] std::size_t getCellMinId() const {return 0;}
+        [[nodiscard]] std::vector<const sf::RectangleShape*> getNeighbours(const std::size_t id);
 
         std::unique_ptr<sf::RenderWindow> _window;
         

@@ -1,3 +1,4 @@
+#include <math.h> 
 #include "grid.h"
 
 bool GridCreator::spinOnce()
@@ -27,8 +28,25 @@ bool GridCreator::spinOnce()
         if (mouse_pressed && mouse_released)
         {
             mouse_pressed = mouse_released = false;
-            size_t cell_id = getCellId(event.mouseButton.x, event.mouseButton.y);
-            std::cout << "Grid id: " << cell_id << std::endl;
+            size_t cell_id = 0;
+
+            if (getCellId(event.mouseButton.x, event.mouseButton.y, cell_id))
+            {
+                std::cout << "\nCell id: " << cell_id;
+                std::cout << "\nNeighbours positions:";
+                std::vector<const sf::RectangleShape*> neighbours = getNeighbours(cell_id);
+                for (std::size_t index = 0; index < neighbours.size(); index++)
+                {
+                    std::cout << " [" << neighbours.at(index)->getPosition().x
+                    << ", " << neighbours.at(index)->getPosition().y << "],";
+                }
+            }
+            else
+            {
+                std::cout << "Could not find cell id: " << std::endl;
+            }
+            std::cout << std::endl;
+            
         }
     }
 
@@ -246,19 +264,84 @@ GridCreator::CellMode GridCreator::getCellMode(const std::size_t id) const // TO
     }
 }
 
-std::size_t GridCreator::getCellId(const float x, const float y) const
+bool GridCreator::getCellId(const float x, const float y, std::size_t& id)
 {
+    if (x > _width || x < 0 || y > _height || y < 0)
+    {
+        return false;
+    }
+
     for (std::size_t cell_index = getCellMinId(); cell_index < _cells.size(); cell_index++)
     {
         bool fit_in_cell = _cells.at(cell_index).getGlobalBounds().contains(x, y);
-        bool fit_in_top_boundery = y == _cells.at(cell_index).getGlobalBounds().top;
-        bool fit_in_left_boundery = x == _cells.at(cell_index).getGlobalBounds().left;
+        //bool fit_in_top_boundery = y == _cells.at(cell_index).getGlobalBounds().top;
+        //bool fit_in_left_boundery = x == _cells.at(cell_index).getGlobalBounds().left;
 
-        if (fit_in_cell || fit_in_top_boundery || fit_in_left_boundery)
+        if (fit_in_cell /*|| fit_in_top_boundery || fit_in_left_boundery*/)
         {
-            return cell_index;
+            id = cell_index;
+            return true;
         }
     }
 
-    return SIZE_MAX;
+    return false;
+}
+
+std::vector<const sf::RectangleShape*> GridCreator::getNeighbours(const std::size_t id)
+{
+    std::vector<const sf::RectangleShape*> cells;
+    const sf::RectangleShape* required_cell = getCell(id);
+
+    if (required_cell == nullptr)
+    {
+        return cells;
+    }
+
+    // Can make problems when cell will not be square
+    const float diagonal_distance = sqrt(pow(_cell_width, 2.f) + pow(_cell_height, 2.f));
+    const float observe_distance{diagonal_distance};
+
+    const float right_x = required_cell->getPosition().x + diagonal_distance;
+    const float right_y = required_cell->getPosition().y;
+
+    const float left_x = required_cell->getPosition().x - diagonal_distance;
+    const float left_y = required_cell->getPosition().y;
+
+    const float upper_x = required_cell->getPosition().x;
+    const float upper_y = required_cell->getPosition().y - diagonal_distance;
+
+    const float lower_x = required_cell->getPosition().x;
+    const float lower_y = required_cell->getPosition().y + diagonal_distance;
+
+    const float right_upper_x = required_cell->getPosition().x + diagonal_distance;
+    const float right_upper_y = required_cell->getPosition().y - diagonal_distance;
+
+    const float left_upper_x = required_cell->getPosition().x - diagonal_distance;
+    const float left_upper_y = required_cell->getPosition().y - diagonal_distance;
+
+    const float right_lower_x = required_cell->getPosition().x + diagonal_distance;
+    const float right_lower_y = required_cell->getPosition().y + diagonal_distance;
+
+    const float left_lower_x = required_cell->getPosition().x - diagonal_distance;
+    const float left_lower_y = required_cell->getPosition().y + diagonal_distance;
+
+    constexpr std::size_t cell_number = 8;
+
+    float x_position[cell_number] = {right_x, left_x, upper_x, lower_x, right_upper_x, left_upper_x, right_lower_x, left_lower_x};
+    float y_position[cell_number] = {right_y, left_y, upper_y, lower_y, right_upper_y, left_upper_y, right_lower_y, left_lower_y};
+
+    std::size_t observed_cell_id{0};
+    bool cell_founded = false;
+
+    for (std::size_t index = 0; index < cell_number; index++)
+    {
+        cell_founded = getCellId(x_position[index], y_position[index], observed_cell_id);
+
+        if (cell_founded)
+        {
+            cells.push_back(&_cells.at(observed_cell_id));
+        }
+    }
+
+    return cells;
 }
