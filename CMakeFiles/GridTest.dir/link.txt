@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/GridTest.dir/grid_test.cpp.o -o GridTest   -L/home/laci/git_projects/PathPlanning/world  -Wl,-rpath,/home/laci/git_projects/PathPlanning/world world/libworld.a -lsfml-graphics -lsfml-window -lsfml-system 
