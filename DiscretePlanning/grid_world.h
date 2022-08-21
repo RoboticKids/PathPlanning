@@ -44,7 +44,9 @@ class GridWorld
 
         bool SpinOnce();
 
+        void DrawGrid();
         Node *GetMouseClickedNode(const int x, const int y);
+    
     
         void MakeStartNode(Node *node);
         void MakeGoalNode(Node *node);

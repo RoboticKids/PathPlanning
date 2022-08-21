@@ -63,8 +63,9 @@ bool GridWorld::SpinOnce()
                 else if (event.mouseButton.button == sf::Mouse::Button::Right)
                 {
                     auto node = GetMouseClickedNode(event.mouseButton.x, event.mouseButton.y);
-                    ClearNode(node);
+                    if (!IsNodeStart(node) && !IsNodeGoal(node)) ClearNode(node);
                 }
+                // TODO: Reset environment
                 else
                 {
                 }
@@ -77,11 +78,10 @@ bool GridWorld::SpinOnce()
             }
 
         }
-        // Update
 
         // Draw
         _window.clear();
-
+        DrawGrid();
         _window.display();
 
         return true;
@@ -90,6 +90,75 @@ bool GridWorld::SpinOnce()
     {
         return false;
     }
+}
+
+///////////////////////////////////////////////////////////////////////
+/// @brief
+/// @param
+///////////////////////////////////////////////////////////////////////
+void GridWorld::DrawGrid()
+{
+    // White background
+    sf::RectangleShape background(sf::Vector2f(_width, _width));
+    background.setFillColor(sf::Color(255,255,255));
+    background.setPosition(sf::Vector2f(0, 0));
+    _window.draw(background);
+
+    // Nodes visualization
+    for (int row=0; row<_rows; ++row)
+    {
+        for (int col=0; col<_rows; ++col)
+        {
+            switch (_grid[row][col].mode)
+            {
+                case NodeMode::START:
+                {
+                    sf::RectangleShape node_rect(sf::Vector2f(_grid_size, _grid_size));
+                    node_rect.setFillColor(sf::Color(139,69,19));
+                    node_rect.setPosition(sf::Vector2f(col*_grid_size, row*_grid_size));
+                    _window.draw(node_rect);
+                    break;
+                }
+                case NodeMode::GOAL:
+                {
+                    sf::RectangleShape node_rect(sf::Vector2f(_grid_size, _grid_size));
+                    node_rect.setFillColor(sf::Color(0,255,0));
+                    node_rect.setPosition(sf::Vector2f(col*_grid_size, row*_grid_size));
+                    _window.draw(node_rect);
+                    break;
+                }
+                case NodeMode::OBSTACLE:
+                {
+                    sf::RectangleShape node_rect(sf::Vector2f(_grid_size, _grid_size));
+                    node_rect.setFillColor(sf::Color(0,0,0));
+                    node_rect.setPosition(sf::Vector2f(col*_grid_size, row*_grid_size));
+                    _window.draw(node_rect);
+                    break;
+                }
+                default:
+                {
+                    sf::RectangleShape node_rect(sf::Vector2f(_grid_size, _grid_size));
+                    node_rect.setFillColor(sf::Color(255,255,255));
+                    node_rect.setPosition(sf::Vector2f(col*_grid_size, row*_grid_size));
+                    _window.draw(node_rect);
+                    break;
+                }
+            }
+        }
+    }
+
+    // Gray grid lines
+    for (int row=0; row<_rows; ++row)
+    {
+        sf::Vertex row_line[] = {sf::Vertex(sf::Vector2f(0, row*_grid_size), sf::Color(128,128,128)), sf::Vertex(sf::Vector2f(_width, row*_grid_size), sf::Color(128,128,128))};
+        _window.draw(row_line, 2, sf::Lines);
+        for (int col=0; col<_rows; ++col)
+        {
+            sf::Vertex col_line[] = {sf::Vertex(sf::Vector2f(row*_grid_size, 0), sf::Color(128,128,128)), sf::Vertex(sf::Vector2f(row*_grid_size, _width), sf::Color(128,128,128))};
+            _window.draw(col_line, 2, sf::Lines);
+        }
+    }
+
 }
 
 ///////////////////////////////////////////////////////////////////////
