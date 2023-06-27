@@ -5,11 +5,12 @@
 #include <QComboBox>
 #include <QGraphicsScene>
 #include <QBrush>
+#include "ui_mainwindow.h"
 
 #include <iostream>
 #include <vector>
 #include <string>
-#include "ui_mainwindow.h"
+#include "discrete_node.h"
 
 class DiscreteEnvironment : public QMainWindow
 {

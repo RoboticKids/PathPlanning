@@ -54,13 +54,15 @@ MainWindow::on_ButtonResetClicked()
     std::cout << "Reseting environment...\n";
     if (ui->comboBox_env_type->currentText() == "Discrete")
     {
-        
+        if (!_env_continuous) delete _env_continuous;
         _env_discrete = new DiscreteEnvironment(_WIDTH, _HEIGHT, _ROWS);
         _env_discrete->MakeGrid(_env_scene);
     }
     else if (ui->comboBox_env_type->currentText() == "Continuous")
     {
-    
+        if (!_env_discrete) delete _env_discrete;
+        _env_continuous = new ContinuousEnvironment(_WIDTH, _HEIGHT);
+        _env_continuous->ResetEnv(_env_scene);
     }
 
 }
@@ -94,4 +96,10 @@ void
 MainWindow::on_PlannerChanged(int planner_idx)
 {
     std::cout << "planner changed\n";
+}
+
+void 
+MainWindow::on_MouseEvent(QGraphicsSceneMouseEvent *event)
+{
+
 }

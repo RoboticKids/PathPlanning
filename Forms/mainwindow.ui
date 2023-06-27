@@ -146,6 +146,8 @@ border-radius: 5px;</string>
                  <widget class="QLabel" name="label_env_type">
                   <property name="font">
                    <font>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -164,6 +166,11 @@ border-radius: 5px;</string>
                     <width>0</width>
                     <height>0</height>
                    </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>14</pointsize>
+                   </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QComboBox {
@@ -186,6 +193,8 @@ QComboBox:focus {
                  <widget class="QLabel" name="label_planner_type">
                   <property name="font">
                    <font>
+                    <pointsize>14</pointsize>
+                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -199,6 +208,11 @@ QComboBox:focus {
                 </item>
                 <item row="1" column="1">
                  <widget class="QComboBox" name="comboBox_planner_type">
+                  <property name="font">
+                   <font>
+                    <pointsize>14</pointsize>
+                   </font>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QComboBox {
 	color: rgb(211, 215, 207);
@@ -260,6 +274,11 @@ border-radius: 5px;</string>
                  <width>16777215</width>
                  <height>30</height>
                 </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>14</pointsize>
+                </font>
                </property>
                <property name="styleSheet">
                 <string notr="true"> color: rgb(238, 238, 236);</string>
@@ -330,6 +349,11 @@ border-radius: 5px;</string>
                     <height>16777215</height>
                    </size>
                   </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>14</pointsize>
+                   </font>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
 	color: rgb(238, 238, 236);
@@ -364,6 +388,11 @@ QPushButton:pressed {
                     <width>16777215</width>
                     <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>14</pointsize>
+                   </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
