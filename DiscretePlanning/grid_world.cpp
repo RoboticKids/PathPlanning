@@ -1,9 +1,10 @@
 #include "grid_world.h"
 
-GridWorld::GridWorld(const int width, const int rows)
+GridWorld::GridWorld(const int width, const int rows, const SearchAlgorithm algo)
     : _width(width)
      ,_rows(rows)
      ,_window(sf::VideoMode(width, width), "Discrete World")
+     ,_algorithm(algo)
 {
     _grid_size = _width / rows;     // int division
 
@@ -73,8 +74,17 @@ bool GridWorld::SpinOnce()
             // Start algorithm with "space" keyboard
             if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space)
             {
-                std::cout << "Space\n";
-                // TODO: Start an algorithm
+                switch (_algorithm)
+                {
+                    case SearchAlgorithm::FORWARD_SEARCH:
+                    {
+                        std::cout << "space\n";
+                        discrete_algorithms::ForwardSearch();
+                        break;
+                    }
+                    default:
+                        break;
+                }
             }
 
         }

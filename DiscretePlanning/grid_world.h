@@ -7,6 +7,16 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
+#include "forward_search.h"
+
+
+enum class SearchAlgorithm
+{
+    FORWARD_SEARCH,
+    BREADTH_FIRST_SEARCH,
+    DEPTH_FIRST_SEARCH
+};
+
 enum class NodeMode
 {
     EMPTY,
@@ -39,7 +49,7 @@ struct Node
 class GridWorld
 {
     public:
-        GridWorld(const int width, const int rows);
+        GridWorld(const int width, const int rows, const SearchAlgorithm algo);
         ~GridWorld();
 
         bool SpinOnce();
@@ -68,6 +78,7 @@ class GridWorld
         const int _rows;
         int _grid_size;
         std::vector<std::vector<Node>> _grid;
-        
+
+        SearchAlgorithm _algorithm;
 };
 

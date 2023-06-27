@@ -16,5 +16,9 @@ target_link_libraries(gridworld
                         sfml-system
                         sfml-window)
 
+add_library(algo forward_search.h forward_search.cpp)
+target_link_libraries(algo) 
+
+
 add_executable(test test.cpp)
-target_link_libraries(test gridworld)
+target_link_libraries(test gridworld algo)
