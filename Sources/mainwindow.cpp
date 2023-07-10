@@ -27,13 +27,14 @@ MainWindow::MainWindow(QWidget *parent) :
     
 
     // Environment scene
-    _env_scene = new QGraphicsScene(this);
+    _env_scene = std::make_shared<EnvGraphicsScene>(this);
     ui->graphicsView->setFixedSize(960, 800);
     ui->graphicsView->setFrameStyle(0);
-    ui->graphicsView->setScene(_env_scene); 
+    ui->graphicsView->setScene(_env_scene.get()); 
     
 
     on_ButtonResetClicked();
+    connect(_env_scene.get(), SIGNAL(MouseClicked(QGraphicsSceneMouseEvent *)), this, SLOT(on_MouseClicked(QGraphicsSceneMouseEvent *)));
 }
 
 MainWindow::~MainWindow()
@@ -54,15 +55,15 @@ MainWindow::on_ButtonResetClicked()
     std::cout << "Reseting environment...\n";
     if (ui->comboBox_env_type->currentText() == "Discrete")
     {
-        if (!_env_continuous) delete _env_continuous;
-        _env_discrete = new DiscreteEnvironment(_WIDTH, _HEIGHT, _ROWS);
-        _env_discrete->MakeGrid(_env_scene);
+        _env_scene->clear();
+        _env_discrete = std::make_shared<DiscreteEnvironment>(_WIDTH, _HEIGHT, _ROWS);
+        _env_discrete->MakeGrid(_env_scene.get());
     }
     else if (ui->comboBox_env_type->currentText() == "Continuous")
     {
-        if (!_env_discrete) delete _env_discrete;
-        _env_continuous = new ContinuousEnvironment(_WIDTH, _HEIGHT);
-        _env_continuous->ResetEnv(_env_scene);
+        _env_scene->clear();
+        _env_continuous = std::make_shared<ContinuousEnvironment>(_WIDTH, _HEIGHT);
+        _env_continuous->ResetEnv(_env_scene.get());
     }
 
 }
@@ -78,9 +79,7 @@ MainWindow::on_EnvironmentChanged(int env_idx)
         {
             ui->comboBox_planner_type->addItem(planner);
         }
-        _env_discrete = new DiscreteEnvironment(_WIDTH, _HEIGHT, _ROWS);
-
-
+        _env_discrete = std::make_shared<DiscreteEnvironment>(_WIDTH, _HEIGHT, _ROWS);
     }
     else if (ui->comboBox_env_type->currentText() == "Continuous")
     {
@@ -98,8 +97,38 @@ MainWindow::on_PlannerChanged(int planner_idx)
     std::cout << "planner changed\n";
 }
 
-void 
-MainWindow::on_MouseEvent(QGraphicsSceneMouseEvent *event)
+void
+MainWindow::on_MouseClicked(QGraphicsSceneMouseEvent * mouseEvent)
 {
-
+    const auto X = mouseEvent->scenePos().x();
+    const auto Y = mouseEvent->scenePos().y();
+    if (ui->comboBox_env_type->currentText() == "Discrete")
+    {
+        auto temp_node = _env_discrete->GetMouseClickedNode(X, Y);
+        if (_env_discrete->node_start == nullptr)
+        {
+            _env_discrete->node_start = temp_node;
+            _env_discrete->node_start->MakeStart();
+            _env_discrete->node_start->Draw(_env_scene.get());
+        }
+        else if (_env_discrete->node_goal == nullptr)
+        {
+            if (temp_node != _env_discrete->node_start)
+            {
+                _env_discrete->node_goal = temp_node;
+                _env_discrete->node_goal->MakeGoal();
+                _env_discrete->node_goal->Draw(_env_scene.get());
+            }
+        }
+        else
+        {
+            if (temp_node != _env_discrete->node_start &&
+                temp_node != _env_discrete->node_goal)
+            {
+                temp_node->MakeObstacle();
+                temp_node->Draw(_env_scene.get());
+            }
+        }
+        
+    }
 }

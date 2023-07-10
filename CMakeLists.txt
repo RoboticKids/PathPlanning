@@ -25,13 +25,15 @@ SET(SOURCES
         ${PROJECT_SOURCE_DIR}/Sources/mainwindow.cpp
         ${PROJECT_SOURCE_DIR}/Sources/discrete_env.cpp
         ${PROJECT_SOURCE_DIR}/Sources/continuous_env.cpp
-        ${PROJECT_SOURCE_DIR}/Sources/discrete_node.cpp)
+        ${PROJECT_SOURCE_DIR}/Sources/discrete_node.cpp
+        ${PROJECT_SOURCE_DIR}/Sources/env_graphics_scene.cpp)
 
 SET(HEADERS 
         ${PROJECT_SOURCE_DIR}/Headers/mainwindow.h
         ${PROJECT_SOURCE_DIR}/Headers/discrete_env.h
         ${PROJECT_SOURCE_DIR}/Headers/continuous_env.h
-        ${PROJECT_SOURCE_DIR}/Headers/discrete_node.h)
+        ${PROJECT_SOURCE_DIR}/Headers/discrete_node.h
+        ${PROJECT_SOURCE_DIR}/Headers/env_graphics_scene.h)
         
 SET(FORMS ${PROJECT_SOURCE_DIR}/Forms/mainwindow.ui)
 
