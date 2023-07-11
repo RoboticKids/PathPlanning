@@ -1,4 +1,4 @@
-#include "continuous_env.h"
+#include "env/continuous_env.h"
 
 ContinuousEnvironment::ContinuousEnvironment(const int WIDTH, 
                                              const int HEIGHT, 

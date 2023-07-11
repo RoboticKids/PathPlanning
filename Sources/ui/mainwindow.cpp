@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "ui/mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -46,7 +46,26 @@ void
 MainWindow::on_ButtonSolveClicked()
 {
     std::cout << "Solving environment...\n";
+    _env_discrete->UpdateNeighbours();
+    if (ui->comboBox_env_type->currentText() == "Discrete")
+    {
+        if (ui->comboBox_planner_type->currentText() == "Depth-First Search")
+        {
+            std::cout << "Algorithm: Depth-First Search\n";
+        }
+        else if (ui->comboBox_planner_type->currentText() == "Breadth-First Search")
+        {
+            std::cout << "Algorithm: Breadth-First Search\n";
+        }
+        else
+        {
+            std::cout << "Not implemented...\n";
+        }
+    }
+    else if (ui->comboBox_env_type->currentText() == "Continuous")
+    {
 
+    }
 }
 
 void
@@ -56,7 +75,7 @@ MainWindow::on_ButtonResetClicked()
     if (ui->comboBox_env_type->currentText() == "Discrete")
     {
         _env_scene->clear();
-        _env_discrete = std::make_shared<DiscreteEnvironment>(_WIDTH, _HEIGHT, _ROWS);
+        _env_discrete = std::make_shared<DiscreteEnvironment>(_WIDTH, _HEIGHT, _ROWS, _env_scene.get());
         _env_discrete->MakeGrid(_env_scene.get());
     }
     else if (ui->comboBox_env_type->currentText() == "Continuous")
@@ -79,7 +98,7 @@ MainWindow::on_EnvironmentChanged(int env_idx)
         {
             ui->comboBox_planner_type->addItem(planner);
         }
-        _env_discrete = std::make_shared<DiscreteEnvironment>(_WIDTH, _HEIGHT, _ROWS);
+        _env_discrete = std::make_shared<DiscreteEnvironment>(_WIDTH, _HEIGHT, _ROWS, _env_scene.get());
     }
     else if (ui->comboBox_env_type->currentText() == "Continuous")
     {
@@ -109,7 +128,6 @@ MainWindow::on_MouseClicked(QGraphicsSceneMouseEvent * mouseEvent)
         {
             _env_discrete->node_start = temp_node;
             _env_discrete->node_start->MakeStart();
-            _env_discrete->node_start->Draw(_env_scene.get());
         }
         else if (_env_discrete->node_goal == nullptr)
         {
@@ -117,16 +135,15 @@ MainWindow::on_MouseClicked(QGraphicsSceneMouseEvent * mouseEvent)
             {
                 _env_discrete->node_goal = temp_node;
                 _env_discrete->node_goal->MakeGoal();
-                _env_discrete->node_goal->Draw(_env_scene.get());
             }
         }
         else
         {
             if (temp_node != _env_discrete->node_start &&
-                temp_node != _env_discrete->node_goal)
+                temp_node != _env_discrete->node_goal &&
+                !temp_node->isObstacle())
             {
                 temp_node->MakeObstacle();
-                temp_node->Draw(_env_scene.get());
             }
         }
         

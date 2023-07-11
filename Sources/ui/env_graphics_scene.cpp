@@ -1,4 +1,4 @@
-#include "env_graphics_scene.h"
+#include "ui/env_graphics_scene.h"
 #include <QDebug>
 
 EnvGraphicsScene::EnvGraphicsScene(QObject *parent) 

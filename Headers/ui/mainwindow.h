@@ -12,8 +12,8 @@
 #include <string>
 #include <memory>
 #include "env_graphics_scene.h"
-#include "discrete_env.h"
-#include "continuous_env.h"
+#include "../env/discrete_env.h"
+#include "../env/continuous_env.h"
 
 namespace Ui {
 class MainWindow;

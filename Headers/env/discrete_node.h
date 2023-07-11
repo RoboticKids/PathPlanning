@@ -5,13 +5,16 @@
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <iostream>
+#include <memory>
 
 class DiscreteNode
 {
     public:
         DiscreteNode(const int INDEX_ROW, 
                      const int INDEX_COL, 
-                     const std::vector<int> &grid_size);
+                     const std::vector<int> &grid_size,
+                     const int NUM_ROWS,
+                     QGraphicsScene *scene);
 
 
         std::vector<int> GetIndexPosition();
@@ -21,7 +24,6 @@ class DiscreteNode
         bool isAlive();
         // Check if a node is an obstacle
         bool isObstacle();
-
         // Reset a node to the initial state
         void Reset();
         // Make a node dead
@@ -34,19 +36,23 @@ class DiscreteNode
         void MakeStart();
         // Convert a node into a goal node
         void MakeGoal();
-        // Draw a rectangle representing a node and its state
-        void Draw(QGraphicsScene *scene);
+        // Make path node
+        void MakePath();
+        // Update neighbours
+        void UpdateNeighbours(std::vector< std::vector< std::shared_ptr<DiscreteNode> > > &grid);
 
     private:
         int _index_row;
         int _index_col;
         int _position_x;
         int _position_y;
+        int _num_rows;
         std::vector<int> _grid_size;
         // QColor _color;
         Qt::GlobalColor _color;
 
         QGraphicsRectItem* _node_visual;
+        std::vector<DiscreteNode *> _neighbours; 
 
 
 };
