@@ -61,9 +61,10 @@ DiscreteNode::MakeDead()
 void 
 DiscreteNode::MakeAlive()
 {
-    _color == Qt::darkYellow;
+    _color == Qt::black;
     _node_visual->setBrush(QBrush(_color, Qt::SolidPattern));
     _node_visual->update();
+    std::cout << "make alive\n";
 }
 
 void 
@@ -102,27 +103,27 @@ DiscreteNode::MakePath()
 void 
 DiscreteNode::UpdateNeighbours(std::vector< std::vector< std::shared_ptr<DiscreteNode> > > &grid)
 {
-    _neighbours.clear();
+    neighbours.clear();
     //TODO: fix NUM_ROWS
     //TODO: add options to UI for diag movement
     // Neighbour on the right
     if (_index_col < (_num_rows-1) && !grid[_index_row][_index_col+1]->isObstacle())
     {
-        _neighbours.push_back(grid[_index_row][_index_col+1].get());
+        neighbours.push_back(grid[_index_row][_index_col+1].get());
     } 
     // Neighbour on the left
     if (_index_col > 0 && !grid[_index_row][_index_col-1]->isObstacle()) 
     {
-        _neighbours.push_back(grid[_index_row][_index_col-1].get());
+        neighbours.push_back(grid[_index_row][_index_col-1].get());
     }
     // Upper neighbour
     if (_index_row > 0 && !grid[_index_row-1][_index_col]->isObstacle()) 
     {
-        _neighbours.push_back(grid[_index_row-1][_index_col].get());
+        neighbours.push_back(grid[_index_row-1][_index_col].get());
     }
     // Bottom neighbour
     if (_index_row < (_num_rows-1) && !grid[_index_row+1][_index_col]->isObstacle()) 
     {
-        _neighbours.push_back(grid[_index_row+1][_index_col].get());
+        neighbours.push_back(grid[_index_row+1][_index_col].get());
     }
 }

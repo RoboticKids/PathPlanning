@@ -41,6 +41,8 @@ class DiscreteNode
         // Update neighbours
         void UpdateNeighbours(std::vector< std::vector< std::shared_ptr<DiscreteNode> > > &grid);
 
+        std::vector<DiscreteNode *> neighbours; 
+
     private:
         int _index_row;
         int _index_col;
@@ -52,7 +54,6 @@ class DiscreteNode
         Qt::GlobalColor _color;
 
         QGraphicsRectItem* _node_visual;
-        std::vector<DiscreteNode *> _neighbours; 
 
 
 };

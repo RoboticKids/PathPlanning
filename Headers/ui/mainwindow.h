@@ -11,9 +11,13 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <thread>
+
 #include "env_graphics_scene.h"
 #include "../env/discrete_env.h"
 #include "../env/continuous_env.h"
+
+#include "../algorithms/breadth_first_search.h"
 
 namespace Ui {
 class MainWindow;

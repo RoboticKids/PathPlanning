@@ -52,6 +52,10 @@ MainWindow::on_ButtonSolveClicked()
         if (ui->comboBox_planner_type->currentText() == "Depth-First Search")
         {
             std::cout << "Algorithm: Depth-First Search\n";
+            // BreadthFirstSearch(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
+            // _env_discrete->node_start->MakeDead();
+            BreadthFirstSearch solver(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
+            solver.Solve();
         }
         else if (ui->comboBox_planner_type->currentText() == "Breadth-First Search")
         {
