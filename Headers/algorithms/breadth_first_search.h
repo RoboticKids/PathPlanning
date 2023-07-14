@@ -2,21 +2,20 @@
 #include "algorithms/solver_template.h"
 
 
-// class BreadthFirstSearch : public Solver
-// {
-//     public:
-//         BreadthFirstSearch(DiscreteNode *node_start, DiscreteNode *node_goal);
+class BreadthFirstSearch : public Solver
+{
+    public:
+        BreadthFirstSearch(DiscreteNode *node_start, DiscreteNode *node_goal);
 
-//         bool Solve() override;
+        void run() override;
+        void VisualizePath() override;
 
-//     private:
-//         DiscreteNode *_node_start;
-//         DiscreteNode *_node_goal;
-//         std::deque<DiscreteNode *> _set_open;
-//         std::deque<DiscreteNode *> _set_visited;
-// };
+    private:
+        DiscreteNode *_node_start;
+        DiscreteNode *_node_goal;
+        std::deque<DiscreteNode *> _set_open;
+        std::deque<DiscreteNode *> _set_visited;
+        std::unordered_map<DiscreteNode *, DiscreteNode *> _set_camefrom;
+    
+};
 
-
-
-bool BreadthFirstSearch(DiscreteNode *_node_start);
-// bool BreadthFirstSearch(DiscreteNode *_node_start, DiscreteNode *_node_goal);

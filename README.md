@@ -1,4 +1,5 @@
 # PathPlanning
 
-Need to reimplement GraphScene to get mouse click event
-https://stackoverflow.com/questions/7830054/how-to-draw-a-point-on-mouseclick-on-a-qgraphicsscene
+1. Nepaci sa mi ze by som musel mat pointer pre kazdy solver aby mi nezrusilo thread
+2. Disconnectnut vsetky signaly dokym bezi solver
+3. Dopln moznost pre diagonalny pohyb

@@ -45,71 +45,20 @@ MainWindow::~MainWindow()
 void
 MainWindow::on_ButtonSolveClicked()
 {
-    std::cout << "Solving environment...\n";
-    disconnect(_env_scene.get(), SIGNAL(MouseClicked(QGraphicsSceneMouseEvent *)), this, SLOT(on_MouseClicked(QGraphicsSceneMouseEvent *)));
-    
+    std::cout << "-----------\n";
     if (ui->comboBox_env_type->currentText() == "Discrete")
     {
         _env_discrete->UpdateNeighbours();
         if (ui->comboBox_planner_type->currentText() == "Depth-First Search")
         {
             std::cout << "Algorithm: Depth-First Search\n";
-            // BreadthFirstSearch(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
-            // _env_discrete->node_start->MakeDead();
-            // BreadthFirstSearch solver(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
-            // solver.Solve();
-
-            std::deque<DiscreteNode *> _set_open;
-            std::deque<DiscreteNode *> _set_visited;
-            std::deque<DiscreteNode *> _set_camefrom;
-            _set_open.push_back(_env_discrete->node_start.get());
-            _set_visited.push_back(_env_discrete->node_start.get());
-
-            while (_set_open.size() > 0)
-            {
-                // Get first node
-                auto node_current = _set_open.front();
-                // Pop it from the queue
-                _set_open.pop_front();
-
-                // Check if the current node is goal node
-                if (node_current == _env_discrete->node_goal.get())
-                {
-                    std::cout << "Solution found.\n";
-                    //TODO: draw a path
-                    break;
-                }
-                for (auto neighbour : node_current->neighbours)
-                {
-                    if (std::find(_set_visited.begin(), _set_visited.end(), neighbour) == _set_visited.end())
-                    {
-                        _set_visited.push_back(neighbour);
-                        _set_open.push_back(neighbour);
-                        if (neighbour != _env_discrete->node_start.get() && neighbour != _env_discrete->node_goal.get())
-                        {
-                            neighbour->MakeAlive();
-                        }
-                    }
-                    else
-                    {
-                    }
-                    usleep(500000);
-                }
-                if (node_current != _env_discrete->node_start.get())
-                {
-                    node_current->MakeDead();
-                }
-
-            }
-            std::cout << "Ending search\n";
-
-
-
-
         }
         else if (ui->comboBox_planner_type->currentText() == "Breadth-First Search")
         {
             std::cout << "Algorithm: Breadth-First Search\n";
+            _solver = std::make_shared<BreadthFirstSearch>(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
+            connect(_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
+            _solver->start();
         }
         else
         {
@@ -120,7 +69,6 @@ MainWindow::on_ButtonSolveClicked()
     {
 
     }
-    connect(_env_scene.get(), SIGNAL(MouseClicked(QGraphicsSceneMouseEvent *)), this, SLOT(on_MouseClicked(QGraphicsSceneMouseEvent *)));
 }
 
 void
@@ -203,4 +151,13 @@ MainWindow::on_MouseClicked(QGraphicsSceneMouseEvent * mouseEvent)
         }
         
     }
+}
+
+
+void
+MainWindow::on_SolverFinished()
+{
+    std::cout << "-----------\n\n";
+    
+    //TODO: disconnect all signals maybe and reconnect so nothing can be changed during the run
 }

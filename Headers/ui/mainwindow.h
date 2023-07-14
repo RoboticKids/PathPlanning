@@ -46,6 +46,7 @@ class MainWindow : public QMainWindow
         const std::vector<QString> _planners_continuous{"Probabilistic Roadmaps"};
         std::shared_ptr<DiscreteEnvironment> _env_discrete;
         std::shared_ptr<ContinuousEnvironment> _env_continuous;
+        std::shared_ptr<BreadthFirstSearch> _solver;
 
         // Drawing
         // QGraphicsScene* _env_scene;
@@ -57,6 +58,7 @@ class MainWindow : public QMainWindow
         void on_ButtonResetClicked();
         void on_EnvironmentChanged(int env_idx);
         void on_PlannerChanged(int planner_idx);
+        void on_SolverFinished();
 };
 
 #endif // MAINWINDOW_H
