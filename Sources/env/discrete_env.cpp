@@ -44,25 +44,6 @@ DiscreteEnvironment::DrawGridLines(EnvGraphicsScene* env_scene)
     }
 }
 
-void
-DiscreteEnvironment::MouseEvent(const int X, const int Y, EnvGraphicsScene* env_scene)
-{
-    const int row = std::floor(Y / _row_size);
-    const int col = std::floor(X / _col_size);
-    if (node_start == nullptr)
-    {
-        node_start = std::make_shared<DiscreteNode>(row, col, std::vector<int>{_row_size,_col_size}, _NUM_ROWS, env_scene); 
-        node_start->MakeStart();
-    }
-    else if (node_goal == nullptr)
-    {
-        node_goal = std::make_shared<DiscreteNode>(row, col, std::vector<int>{_row_size,_col_size}, _NUM_ROWS, env_scene);
-        node_goal->MakeGoal();
-    }
-    else
-    {
-    }
-}
 
 std::shared_ptr<DiscreteNode>
 DiscreteEnvironment::GetMouseClickedNode(const int X, const int Y)

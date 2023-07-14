@@ -27,7 +27,6 @@ class DiscreteEnvironment : public QMainWindow
 
         void MakeGrid(EnvGraphicsScene* env_scene);
         void DrawGridLines(EnvGraphicsScene* env_scene);
-        void MouseEvent(const int X, const int Y, EnvGraphicsScene* env_scene);
         void UpdateNeighbours();
         void Spin();
         std::shared_ptr<DiscreteNode> GetMouseClickedNode(const int X, const int Y);

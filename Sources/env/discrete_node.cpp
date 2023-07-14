@@ -14,7 +14,8 @@ DiscreteNode::DiscreteNode(const int INDEX_ROW,
     _position_y = _index_row*grid_size[0];
 
     _node_visual = new QGraphicsRectItem(_position_x, _position_y, _grid_size[1], _grid_size[0]);
-    scene->addItem(_node_visual);
+    _scene = scene;
+    _scene->addItem(_node_visual);
 }
 
 
@@ -33,7 +34,7 @@ DiscreteNode::isDead()
 bool 
 DiscreteNode::isAlive()
 {
-    return _color == Qt::green;
+    return _color == Qt::darkGreen;
 }
 
 bool 
@@ -46,57 +47,49 @@ void
 DiscreteNode::Reset()
 {
     _color == Qt::white;
-    _node_visual->setBrush(QBrush(_color, Qt::SolidPattern));
-    _node_visual->update();
+    _node_visual->setBrush(QBrush(Qt::white, Qt::SolidPattern));
 }
 
 void 
 DiscreteNode::MakeDead()
 {
     _color == Qt::darkGray;
-    _node_visual->setBrush(QBrush(_color, Qt::SolidPattern));
-    _node_visual->update();
+    _node_visual->setBrush(QBrush(Qt::darkGray, Qt::SolidPattern));
 }
 
 void 
 DiscreteNode::MakeAlive()
 {
-    _color == Qt::black;
-    _node_visual->setBrush(QBrush(_color, Qt::SolidPattern));
-    _node_visual->update();
-    std::cout << "make alive\n";
+    _color == Qt::darkGreen;
+    _node_visual->setBrush(QBrush(Qt::darkGreen, Qt::SolidPattern));
 }
 
 void 
 DiscreteNode::MakeObstacle()
 {
     _color = Qt::black;
-    _node_visual->setBrush(QBrush(_color, Qt::SolidPattern));
-    _node_visual->update();
+    _node_visual->setBrush(QBrush(Qt::black, Qt::SolidPattern));
 }
 
 void 
 DiscreteNode::MakeStart()
 {
     _color = Qt::darkRed;
-    _node_visual->setBrush(QBrush(_color, Qt::SolidPattern));
-    _node_visual->update();
+    _node_visual->setBrush(QBrush(Qt::darkRed, Qt::SolidPattern));
 }
 
 void 
 DiscreteNode::MakeGoal()
 {
     _color = Qt::red;
-    _node_visual->setBrush(QBrush(_color, Qt::SolidPattern));
-    _node_visual->update();
+    _node_visual->setBrush(QBrush(Qt::red, Qt::SolidPattern));
 }
 
 void
 DiscreteNode::MakePath()
 {
     _color = Qt::green;
-    _node_visual->setBrush(QBrush(_color, Qt::SolidPattern));
-    _node_visual->update();
+    _node_visual->setBrush(QBrush(Qt::green, Qt::SolidPattern));
 }
 
 
@@ -104,7 +97,6 @@ void
 DiscreteNode::UpdateNeighbours(std::vector< std::vector< std::shared_ptr<DiscreteNode> > > &grid)
 {
     neighbours.clear();
-    //TODO: fix NUM_ROWS
     //TODO: add options to UI for diag movement
     // Neighbour on the right
     if (_index_col < (_num_rows-1) && !grid[_index_row][_index_col+1]->isObstacle())

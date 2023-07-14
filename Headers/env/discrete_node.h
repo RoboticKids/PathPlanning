@@ -54,6 +54,7 @@ class DiscreteNode
         Qt::GlobalColor _color;
 
         QGraphicsRectItem* _node_visual;
+        QGraphicsScene *_scene;
 
 
 };
