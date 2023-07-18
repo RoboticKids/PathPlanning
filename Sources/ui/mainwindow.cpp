@@ -45,20 +45,23 @@ MainWindow::~MainWindow()
 void
 MainWindow::on_ButtonSolveClicked()
 {
-    std::cout << "-----------\n";
+    std::cout << "********************************************************\n";
     if (ui->comboBox_env_type->currentText() == "Discrete")
     {
         _env_discrete->UpdateNeighbours();
         if (ui->comboBox_planner_type->currentText() == "Depth-First Search")
         {
-            std::cout << "Algorithm: Depth-First Search\n";
+            std::cout << "Algorithm:\tDepth-First Search\n";
+            _DFS_solver = std::make_shared<DepthFirstSearch>(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
+            connect(_DFS_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
+            _DFS_solver->start();            
         }
         else if (ui->comboBox_planner_type->currentText() == "Breadth-First Search")
         {
-            std::cout << "Algorithm: Breadth-First Search\n";
-            _solver = std::make_shared<BreadthFirstSearch>(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
-            connect(_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
-            _solver->start();
+            std::cout << "Algorithm:\tBreadth-First Search\n";
+            _BFS_solver = std::make_shared<BreadthFirstSearch>(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
+            connect(_BFS_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
+            _BFS_solver->start();
         }
         else
         {
@@ -157,7 +160,10 @@ MainWindow::on_MouseClicked(QGraphicsSceneMouseEvent * mouseEvent)
 void
 MainWindow::on_SolverFinished()
 {
-    std::cout << "-----------\n\n";
-    
+    std::cout << "Result:\tSolution found.\n";
+    std::cout << "-----------------------\n\n";
+    //disconnect(_BFS_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
+
     //TODO: disconnect all signals maybe and reconnect so nothing can be changed during the run
+    //TODO: reset env after changing the solver
 }

@@ -1,6 +1,6 @@
-#include "algorithms/breadth_first_search.h"
+#include "algorithms/depth_first_search.h"
 
-BreadthFirstSearch::BreadthFirstSearch(DiscreteNode *node_start, DiscreteNode *node_goal)
+DepthFirstSearch::DepthFirstSearch(DiscreteNode *node_start, DiscreteNode *node_goal)
     : _node_start(node_start),
       _node_goal(node_goal)
 {
@@ -9,7 +9,7 @@ BreadthFirstSearch::BreadthFirstSearch(DiscreteNode *node_start, DiscreteNode *n
 
 
 void
-BreadthFirstSearch::run()
+DepthFirstSearch::run()
 {
     _set_open.push_back(_node_start);
     _set_visited.push_back(_node_start);
@@ -17,9 +17,9 @@ BreadthFirstSearch::run()
     while (_set_open.size() > 0)
     {
         // Get first node
-        auto node_current = _set_open.front();
+        auto node_current = _set_open.back();
         // Pop it from the queue
-        _set_open.pop_front();
+        _set_open.pop_back();
 
         // Check if the current node is goal node
         if (node_current == _node_goal)
@@ -56,7 +56,7 @@ BreadthFirstSearch::run()
 }
 
 void
-BreadthFirstSearch::VisualizePath()
+DepthFirstSearch::VisualizePath()
 {
     auto node_current = _node_goal;
     while (_set_camefrom.find(node_current) != _set_camefrom.end())

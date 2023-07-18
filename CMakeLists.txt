@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(path_planning)
 
-## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
 
 
@@ -27,7 +26,9 @@ SET(SOURCES
         ${PROJECT_SOURCE_DIR}/Sources/env/continuous_env.cpp
         ${PROJECT_SOURCE_DIR}/Sources/env/discrete_node.cpp
         ${PROJECT_SOURCE_DIR}/Sources/ui/env_graphics_scene.cpp
-        ${PROJECT_SOURCE_DIR}/Sources/algorithms/breadth_first_search.cpp)
+        ${PROJECT_SOURCE_DIR}/Sources/algorithms/breadth_first_search.cpp
+        ${PROJECT_SOURCE_DIR}/Sources/algorithms/depth_first_search.cpp)
+        
 
 SET(HEADERS 
         ${PROJECT_SOURCE_DIR}/Headers/ui/mainwindow.h
@@ -36,7 +37,9 @@ SET(HEADERS
         ${PROJECT_SOURCE_DIR}/Headers/env/discrete_node.h
         ${PROJECT_SOURCE_DIR}/Headers/ui/env_graphics_scene.h
         ${PROJECT_SOURCE_DIR}/Headers/algorithms/solver_template.h
-        ${PROJECT_SOURCE_DIR}/Headers/algorithms/breadth_first_search.h)
+        ${PROJECT_SOURCE_DIR}/Headers/algorithms/breadth_first_search.h
+        ${PROJECT_SOURCE_DIR}/Headers/algorithms/depth_first_search.h)
+        
         
 SET(FORMS ${PROJECT_SOURCE_DIR}/Forms/mainwindow.ui)
 

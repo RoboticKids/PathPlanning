@@ -18,6 +18,8 @@
 #include "../env/continuous_env.h"
 
 #include "../algorithms/breadth_first_search.h"
+#include "../algorithms/depth_first_search.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -46,7 +48,10 @@ class MainWindow : public QMainWindow
         const std::vector<QString> _planners_continuous{"Probabilistic Roadmaps"};
         std::shared_ptr<DiscreteEnvironment> _env_discrete;
         std::shared_ptr<ContinuousEnvironment> _env_continuous;
-        std::shared_ptr<BreadthFirstSearch> _solver;
+        
+        std::shared_ptr<BreadthFirstSearch> _BFS_solver;
+        std::shared_ptr<DepthFirstSearch> _DFS_solver;
+
 
         // Drawing
         // QGraphicsScene* _env_scene;
