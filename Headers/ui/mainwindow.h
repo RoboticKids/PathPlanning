@@ -19,6 +19,7 @@
 
 #include "../algorithms/breadth_first_search.h"
 #include "../algorithms/depth_first_search.h"
+#include "../algorithms/djikstra_search.h"
 
 
 namespace Ui {
@@ -44,13 +45,15 @@ class MainWindow : public QMainWindow
 
         // Planners
         const std::vector<QString> _environment_list{"Discrete", "Continuous"};
-        const std::vector<QString> _planners_discrete{"Depth-First Search", "Breadth-First Search"};
+        const std::vector<QString> _planners_discrete{"Depth-First Search", "Breadth-First Search", "Djikstra Search"};
         const std::vector<QString> _planners_continuous{"Probabilistic Roadmaps"};
         std::shared_ptr<DiscreteEnvironment> _env_discrete;
         std::shared_ptr<ContinuousEnvironment> _env_continuous;
         
         std::shared_ptr<BreadthFirstSearch> _BFS_solver;
         std::shared_ptr<DepthFirstSearch> _DFS_solver;
+        std::shared_ptr<DjikstraSearch> _Djikstra_solver;
+
 
 
         // Drawing

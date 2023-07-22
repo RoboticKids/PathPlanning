@@ -42,6 +42,7 @@ class DiscreteNode
         void UpdateNeighbours(std::vector< std::vector< std::shared_ptr<DiscreteNode> > > &grid);
 
         std::vector<DiscreteNode *> neighbours; 
+        float cost{1.0};
 
     private:
         int _index_row;

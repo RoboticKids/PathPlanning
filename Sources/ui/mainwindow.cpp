@@ -63,6 +63,13 @@ MainWindow::on_ButtonSolveClicked()
             connect(_BFS_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
             _BFS_solver->start();
         }
+        else if (ui->comboBox_planner_type->currentText() == "Djikstra Search")
+        {
+            std::cout << "Algorithm:\tDjikstra Search\n";
+            _Djikstra_solver = std::make_shared<DjikstraSearch>(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
+            connect(_Djikstra_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
+            _Djikstra_solver->start();
+        }
         else
         {
             std::cout << "Not implemented...\n";

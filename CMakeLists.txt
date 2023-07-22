@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(path_planning)
 
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++14)
 
 
 set(CMAKE_AUTOMOC ON) #This will autogenerate qt gui stuff
@@ -27,7 +27,8 @@ SET(SOURCES
         ${PROJECT_SOURCE_DIR}/Sources/env/discrete_node.cpp
         ${PROJECT_SOURCE_DIR}/Sources/ui/env_graphics_scene.cpp
         ${PROJECT_SOURCE_DIR}/Sources/algorithms/breadth_first_search.cpp
-        ${PROJECT_SOURCE_DIR}/Sources/algorithms/depth_first_search.cpp)
+        ${PROJECT_SOURCE_DIR}/Sources/algorithms/depth_first_search.cpp
+        ${PROJECT_SOURCE_DIR}/Sources/algorithms/djikstra_search.cpp)
         
 
 SET(HEADERS 
@@ -38,7 +39,8 @@ SET(HEADERS
         ${PROJECT_SOURCE_DIR}/Headers/ui/env_graphics_scene.h
         ${PROJECT_SOURCE_DIR}/Headers/algorithms/solver_template.h
         ${PROJECT_SOURCE_DIR}/Headers/algorithms/breadth_first_search.h
-        ${PROJECT_SOURCE_DIR}/Headers/algorithms/depth_first_search.h)
+        ${PROJECT_SOURCE_DIR}/Headers/algorithms/depth_first_search.h
+        ${PROJECT_SOURCE_DIR}/Headers/algorithms/djikstra_search.h)
         
         
 SET(FORMS ${PROJECT_SOURCE_DIR}/Forms/mainwindow.ui)
