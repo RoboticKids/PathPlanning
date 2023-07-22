@@ -28,7 +28,8 @@ SET(SOURCES
         ${PROJECT_SOURCE_DIR}/Sources/ui/env_graphics_scene.cpp
         ${PROJECT_SOURCE_DIR}/Sources/algorithms/breadth_first_search.cpp
         ${PROJECT_SOURCE_DIR}/Sources/algorithms/depth_first_search.cpp
-        ${PROJECT_SOURCE_DIR}/Sources/algorithms/djikstra_search.cpp)
+        ${PROJECT_SOURCE_DIR}/Sources/algorithms/djikstra_search.cpp
+        ${PROJECT_SOURCE_DIR}/Sources/algorithms/astar_search.cpp)
         
 
 SET(HEADERS 
@@ -40,7 +41,8 @@ SET(HEADERS
         ${PROJECT_SOURCE_DIR}/Headers/algorithms/solver_template.h
         ${PROJECT_SOURCE_DIR}/Headers/algorithms/breadth_first_search.h
         ${PROJECT_SOURCE_DIR}/Headers/algorithms/depth_first_search.h
-        ${PROJECT_SOURCE_DIR}/Headers/algorithms/djikstra_search.h)
+        ${PROJECT_SOURCE_DIR}/Headers/algorithms/djikstra_search.h
+        ${PROJECT_SOURCE_DIR}/Headers/algorithms/astar_search.h)
         
         
 SET(FORMS ${PROJECT_SOURCE_DIR}/Forms/mainwindow.ui)

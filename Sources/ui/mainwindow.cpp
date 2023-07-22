@@ -70,6 +70,13 @@ MainWindow::on_ButtonSolveClicked()
             connect(_Djikstra_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
             _Djikstra_solver->start();
         }
+        else if (ui->comboBox_planner_type->currentText() == "A* Search")
+        {
+            std::cout << "Algorithm:\tA* Search\n";
+            _Astar_solver = std::make_shared<AstarSearch>(_env_discrete->node_start.get(), _env_discrete->node_goal.get());
+            connect(_Astar_solver.get(), SIGNAL(SolverFinished()), this, SLOT(on_SolverFinished()));
+            _Astar_solver->start();
+        }
         else
         {
             std::cout << "Not implemented...\n";

@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <unordered_map>
 #include <QThread>
+#include <math.h>
 
 class Solver : public QThread
 {
